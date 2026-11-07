@@ -5,6 +5,7 @@
 
 static void bench1(benchmark::State &state) {
   try {
+    std::cout << "Hello world" << std::endl;
     // Mesh
     constexpr unsigned n_nodes_x = 800, n_nodes_y = 20000,
                        n_nodes = n_nodes_x * n_nodes_y;

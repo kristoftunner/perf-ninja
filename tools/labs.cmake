@@ -20,6 +20,8 @@ if(NOT DEFINED CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Set compiler options
 if(NOT MSVC)
   set(CMAKE_C_FLAGS "-O3 -march=native ${CMAKE_C_FLAGS}")
@@ -56,7 +58,7 @@ if (WIN32)
   endif()
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -g")
 
 # https://github.com/google/benchmark
 find_package(benchmark PATHS "${CMAKE_CURRENT_LIST_DIR}/benchmark/build" REQUIRED)
