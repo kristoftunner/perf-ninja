@@ -1,17 +1,30 @@
 #include "solution.hpp"
 #include <atomic>
 #include <cstring>
+#include <new>
 #include <omp.h>
 #include <vector>
+
+constexpr const size_t kPadding{64UL - sizeof(uint32_t)};
+
+struct PaddedData {
+  uint32_t value;
+  std::byte padding[kPadding];
+};
 
 std::size_t solution(const std::vector<uint32_t> &data, int thread_count) {
   // Using std::atomic counters to disallow compiler to promote `target`
   // memory location into a register. This way we ensure that the store
   // to `target` stays inside the loop.
   struct Accumulator {
-    std::atomic<uint32_t> value = 0;
+    std::atomic<uint32_t> value =
+        0; /// It seems that using an atomic on all threads will result in a
+           /// serious runtime degradation, since this variable is used in every
+           /// iteration
   };
-  std::vector<Accumulator> accumulators(thread_count);
+  // to `target` stays inside the loop.
+  std::vector<PaddedData> accumulators(thread_count);
+  std::vector<Accumulator> accumulators_old(thread_count);
 
 #pragma omp parallel num_threads(thread_count) default(none)                   \
     shared(accumulators, data)
