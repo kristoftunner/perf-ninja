@@ -151,7 +151,7 @@ inline bool setRequiredPrivileges() {
 
 // Allocate an array of doubles of size `size`, return it as a
 // std::unique_ptr<double[], D>, where `D` is a custom deleter type
-inline auto allocateDoublesArray(size_t size) {
+inline auto allocateDoublesArray_old(size_t size) {
   // Allocate memory
   size += size * sizeof(double);
   std::printf("Allocation request: %ld kB\n", size / 1024);
@@ -182,7 +182,7 @@ inline auto allocateDoublesArray(size_t size) {
 
 // Allocate an array of doubles of size `size`, return it as a
 // std::unique_ptr<double[], D>, where `D` is a custom deleter type
-inline auto allocateDoublesArray_old(size_t size) {
+inline auto allocateDoublesArray(size_t size) {
   // Allocate memory
   double *alloc = new double[size];
   // remember to cast the pointer to double* if your allocator returns void*

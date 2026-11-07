@@ -16,15 +16,15 @@ std::size_t solution(const std::vector<uint32_t> &data, int thread_count) {
   // Using std::atomic counters to disallow compiler to promote `target`
   // memory location into a register. This way we ensure that the store
   // to `target` stays inside the loop.
-  struct Accumulator {
+  struct alignas(64) Accumulator {
     std::atomic<uint32_t> value =
         0; /// It seems that using an atomic on all threads will result in a
            /// serious runtime degradation, since this variable is used in every
            /// iteration
   };
   // to `target` stays inside the loop.
-  std::vector<PaddedData> accumulators(thread_count);
-  std::vector<Accumulator> accumulators_old(thread_count);
+  std::vector<PaddedData> accumulators_new(thread_count);
+  std::vector<Accumulator> accumulators(thread_count);
 
 #pragma omp parallel num_threads(thread_count) default(none)                   \
     shared(accumulators, data)

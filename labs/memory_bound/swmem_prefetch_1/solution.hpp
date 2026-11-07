@@ -11,6 +11,9 @@ class hash_map_t {
 public:
     hash_map_t(std::size_t size) : m_vector(size, UNUSED), N_Buckets(size) {}
 
+    inline void prefetch(int val) const{
+      __builtin_prefetch(&m_vector[val % N_Buckets]);
+  }
     bool insert(int val) {
         int bucket = val % N_Buckets;
         if (m_vector[bucket] == UNUSED) {
