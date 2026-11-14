@@ -14,4 +14,4 @@ List *getRandomList(ArenaListAllocator &allocator);
 void printList(List *l);
 
 unsigned getSumOfDigits(unsigned n);
-unsigned solution(List *l1, List *l2);
+unsigned solution(List *l1, List *const l2);
