@@ -22,6 +22,36 @@ static int compare(const void *lhs, const void *rhs) {
   return 0;
 }
 
+[[gnu::always_inline]] static bool compare2(const void *lhs, const void *rhs) {
+  auto &a = *reinterpret_cast<const S *>(lhs);
+  auto &b = *reinterpret_cast<const S *>(rhs);
+
+  if (a.key1 < b.key1)
+    return -1;
+
+  if (a.key1 > b.key1)
+    return 1;
+
+  if (a.key2 < b.key2)
+    return -1;
+
+  if (a.key2 > b.key2)
+    return 1;
+
+  return 0;
+}
+
 void solution(std::array<S, N> &arr) {
-  qsort(arr.data(), arr.size(), sizeof(S), compare);
+  //qsort(arr.data(), arr.size(), sizeof(S), compare);
+  std::sort(arr.begin(), arr.end(), [](S a, S b){
+    if(a.key1 < b.key1)
+      return false;
+    if(a.key1 > b.key1)
+      return true;
+    if(a.key2 < b.key2)
+      return false;
+    if(a.key2 > b.key2)
+      return true;
+    return false;
+  });
 }
