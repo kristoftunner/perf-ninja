@@ -22,8 +22,30 @@ void identity(Matrix &result) {
   }
 }
 
+void transpose(const Matrix& in, Matrix& out)
+{
+  for(int row{0}; row < N; row++)
+  {
+    for(int col{0}; col < N; col++)
+    {
+      out[col][row] = in[row][col];
+    }
+  }
+}
 // Multiply two square matrices
 void multiply(Matrix &result, const Matrix &a, const Matrix &b) {
+  zero(result);
+
+  for (int i = 0; i < N; i++) {
+    for (int k = 0; k < N; k++) {
+      for (int j = 0; j < N; j++) {
+        result[i][j] += a[i][k] * b[k][j];
+      }
+    }
+  }
+}
+
+void multiply_old(Matrix &result, const Matrix &a, const Matrix &b) {
   zero(result);
 
   for (int i = 0; i < N; i++) {

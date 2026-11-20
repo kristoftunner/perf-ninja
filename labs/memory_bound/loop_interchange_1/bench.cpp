@@ -1,6 +1,7 @@
 
 #include "benchmark/benchmark.h"
 #include "solution.h"
+#include <benchmark/types.h>
 #include <memory>
 
 static void bench1(benchmark::State &state) {
@@ -17,7 +18,7 @@ static void bench1(benchmark::State &state) {
 }
 
 // Register the function as a benchmark
-BENCHMARK(bench1);
+BENCHMARK(bench1)->Unit(benchmark::kMillisecond);
 
 // Run the benchmark
 BENCHMARK_MAIN();
